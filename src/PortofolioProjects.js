@@ -2,22 +2,22 @@
 
 import Box from "./Box.js";
 import { useFrame } from "@react-three/fiber";
-import { useScroll, ScrollControls, Scroll } from "@react-three/drei";
-import { useRef } from "react";
+import { useScroll, ScrollControls, Scroll, Html } from "@react-three/drei";
+import { useRef, useState } from "react";
 
-export default function HeroPortofolio({}) {
-  const phone = useRef();
-  const tl = useRef();
-  const scroll = useScroll();
-
+export default function HeroPortofolio({ isAtTop, ...props }) {
   return (
-    <group ref={phone}>
-      <ScrollControls pages={0} damping={0.25}>
-        <Box pos={[0, 0, 0]} rot={[0, 3, 0]} />
+    <group>
+      <ScrollControls pages={isAtTop ? 6 : 0} damping={0.1}>
+        <Box pos={[5, 0, 0]} rot={[0, 9, 0]} />
         <Scroll></Scroll>
         <Scroll html>
-          <h1 className="text-white">Portofolio</h1>
-          <h2>Mijn projecten</h2>
+          <div className="px-8 w-full max-w-wrapper mx-auto ">
+            <section className="h-screen w-full flex flex-col justify-center">
+              <h1 className="text-white top-1/2">Portofolio</h1>
+              <h2>Mijn projecten</h2>
+            </section>
+          </div>
         </Scroll>
       </ScrollControls>
     </group>
