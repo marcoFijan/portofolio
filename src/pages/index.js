@@ -1,4 +1,5 @@
 import HeroSection from "../HeroSection.js";
+import AboutSection from "../AboutSection.js";
 
 import { Montserrat } from "next/font/google";
 
@@ -10,8 +11,9 @@ const montserrat = Montserrat({
 
 export default function Home() {
   return (
-    <main>
+    <main className={`${montserrat.className}`}>
       <HeroSection />
+      <AboutSection />
     </main>
   );
 }
