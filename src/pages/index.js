@@ -1,5 +1,6 @@
 import HeroSection from "../HeroSection.js";
 import AboutSection from "../AboutSection.js";
+import PortofolioSection from "../PortofolioSection.js";
 
 import { Montserrat } from "next/font/google";
 
@@ -14,6 +15,7 @@ export default function Home() {
     <main className={`${montserrat.className}`}>
       <HeroSection />
       <AboutSection />
+      <PortofolioSection />
     </main>
   );
 }
