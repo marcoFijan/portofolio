@@ -1,11 +1,11 @@
 "use client";
 
-import Projects from "./PortfolioProjects.js";
+import Projects from "./PortfolioProjects.jsx";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useState, useRef, useEffect } from "react";
 
-export default function HeroPortofolio() {
+export default function HeroPortfolio() {
   const portofolio = useRef();
   const [isAtTop, setIsAtTop] = useState(false);
 

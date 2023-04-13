@@ -1,6 +1,5 @@
 "use client";
 
-import Box from "./Box.js";
 import Laptop from "./Laptop.jsx";
 import Smartphone from "./Smartphone.jsx";
 import Background from "./Background.jsx";
@@ -14,7 +13,7 @@ import {
 } from "@react-three/drei";
 import { useRef, useState } from "react";
 
-export default function PortofolioProjects({ isAtTop, ...props }) {
+export default function PortfolioProjects({ isAtTop, ...props }) {
   return (
     <group>
       <ScrollControls pages={isAtTop ? 6 : 0} damping={0.1}>
