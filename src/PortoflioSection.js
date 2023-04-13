@@ -1,6 +1,6 @@
 "use client";
 
-import Projects from "./PortofolioProjects.js";
+import Projects from "./PortfolioProjects.js";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useState, useRef, useEffect } from "react";
