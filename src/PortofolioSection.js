@@ -31,7 +31,7 @@ export default function HeroPortofolio() {
             camera={{ position: [0, 0, 7] }}
           >
             <ambientLight color={"white"} intensity={0.3} />
-            <gridHelper args={[20, 20, 0xff0000, "teal"]} />
+            {/* <gridHelper args={[20, 20, 0xff0000, "teal"]} /> */}
             <OrbitControls enableZoom={false} />
             <Projects isAtTop={isAtTop} />
           </Canvas>

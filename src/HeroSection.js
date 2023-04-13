@@ -3,7 +3,7 @@ import styles from "./styles/heroAnimation.module.css";
 export default function HeroSection() {
   return (
     <div className=" w-full min-h-screen bg-bgColorDark flex  justify-center items-center flex-col box-border">
-      <div className="max-w-wrapper mx-auto flex justify-center items-center flex-col">
+      <div className=" max-w-wrapper mx-auto flex justify-center items-center flex-col">
         {/* Marco SVG */}
         <div className="flex flex-wrap gap-x-16 gap-y-4 justify-center max-w-fit max-h-fit h-auto mx-8 animate-[lines_3s_ease-in-out_forwards]">
           <svg
