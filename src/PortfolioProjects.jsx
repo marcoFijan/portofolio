@@ -3,17 +3,35 @@
 import Laptop from "./Laptop.jsx";
 import Smartphone from "./Smartphone.jsx";
 import Background from "./Background.jsx";
+import { motion, useTransform } from "framer-motion";
+
 import { useFrame } from "@react-three/fiber";
 import {
-  useScroll,
   ScrollControls,
   Scroll,
   Environment,
   Float,
+  useScroll,
 } from "@react-three/drei";
 import { useRef, useState } from "react";
 
 export default function PortfolioProjects({ isAtTop, ...props }) {
+  // const scroll = useScroll();
+  // let move = useTransform(scroll, [0, 1], [1, 0]);
+
+  // useFrame(() => {
+  //   console.log(scroll);
+  // });
+  // let tl = useRef(null);
+  // let { scrollYProgress } = useScroll({
+  //   target: tl,
+  //   offset: ["end end", "end start"],
+  // });
+  // let width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  // useFrame(() => {
+  //   console.log(isAtTop ? width : 0);
+  // });
   return (
     <group>
       <ScrollControls pages={isAtTop ? 6 : 0} damping={0.1}>
@@ -36,7 +54,6 @@ export default function PortfolioProjects({ isAtTop, ...props }) {
         </Float>
 
         <Scroll>
-          {" "}
           <Background />
         </Scroll>
         <Scroll html>

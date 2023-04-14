@@ -7,20 +7,45 @@ Source: https://sketchfab.com/3d-models/laptop-7fbe17a5a5dd41538c81c4ad8a5083cf
 Title: Laptop
 */
 
-import React, { useRef } from "react";
-import { useGLTF, useTexture } from "@react-three/drei";
+import React, { useEffect, useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+
+import { useGLTF, useTexture, useScroll } from "@react-three/drei";
+import { useMotionValue, useTransform } from "framer-motion";
+import { motion } from "framer-motion-3d";
 
 export default function Laptop({ pos, rot, ...props }) {
   const { nodes, materials } = useGLTF("./models/laptop.glb");
-  const laptopScreen = useTexture("./images/p1.jpg");
+  const laptopScreenTexture = useTexture("./images/p1.jpg");
+  // const laptop = useRef();
+  // const scroll = useRef();
+  // scroll.current = useScroll();
+  const scroll = useScroll();
+  const motionScroll = useMotionValue(scroll.scroll.current);
+  // const motionScroll = useMotionValue(0.4);
+
+  // const { scrollY } = useScroll();
+  // // const scrollY = scroll.offset;
+  // const tl = useRef();
+  let xMove = useTransform(motionScroll, [0, 1], [0, 100]);
+
+  useFrame(() => {
+    console.log(motionScroll);
+    console.log(xMove);
+  });
+
+  // useEffect(() => {
+  //   tl.current =
+  // }, [])
 
   return (
-    <group
+    <motion.group
       {...props}
       dispose={null}
       scale={1}
       position={pos ? pos : [0, 0, 0]}
       rotation={rot ? rot : [0, 0, 0]}
+      style={{ x: xMove.current }}
     >
       <group rotation={[-Math.PI / 2, 0, 0]}>
         <mesh geometry={nodes.Object_2.geometry} material={materials.Buttons}>
@@ -41,7 +66,7 @@ export default function Laptop({ pos, rot, ...props }) {
         >
           <boxGeometry args={[0.01, 11, 16]} />
           <meshStandardMaterial
-            map={laptopScreen}
+            map={laptopScreenTexture}
             roughness={1}
             metalness={1}
           />
@@ -123,7 +148,7 @@ export default function Laptop({ pos, rot, ...props }) {
           <meshBasicMaterial color="#585858" />
         </mesh>
       </group>
-    </group>
+    </motion.group>
   );
 }
 
