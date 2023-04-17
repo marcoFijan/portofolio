@@ -1,7 +1,7 @@
 "use client";
 
 import Laptop from "./Laptop.jsx";
-import Laptop2 from "./Laptopv2.jsx";
+// import Laptop2 from "./Laptopv5.jsx";
 import Smartphone from "./Smartphone.jsx";
 import Background from "./Background.jsx";
 import { motion, useTransform } from "framer-motion";
@@ -37,7 +37,7 @@ export default function PortfolioProjects({ isAtTop, ...props }) {
           floatIntensity={0.2}
           floatingRange={[3, -3]}
         > */}
-        <Laptop pos={[4, -1, 0]} rot={[0.2, 1.9, 0]} />
+        <Laptop />
         {/* </Float>
         <Float
           speed={1}
