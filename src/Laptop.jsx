@@ -7,58 +7,99 @@ Source: https://sketchfab.com/3d-models/laptop-7fbe17a5a5dd41538c81c4ad8a5083cf
 Title: Laptop
 */
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-
 import { useGLTF, useTexture, useScroll } from "@react-three/drei";
-import { useMotionValue, useTransform } from "framer-motion";
-import { motion } from "framer-motion-3d";
+import { gsap } from "gsap";
+
+// import { motion } from "framer-motion-3d";
 
 export default function Laptop({ pos, rot, ...props }) {
   const { nodes, materials } = useGLTF("./models/laptop.glb");
-  const laptopScreenTexture = useTexture("./images/p1.jpg");
-  // const laptop = useRef();
-  // const scroll = useRef();
-  // scroll.current = useScroll();
+  let [laptopScreenPath, setLaptopScreenPath] = useState("./images/p1.jpg");
+  const laptopScreenTexture = useTexture(laptopScreenPath);
+
+  const laptop = useRef();
   const scroll = useScroll();
-  const motionScroll = useMotionValue(scroll.scroll.current);
-  // const motionScroll = useMotionValue(0.4);
+  const timeline = useRef();
 
-  // const { scrollY } = useScroll();
-  // // const scrollY = scroll.offset;
-  // const tl = useRef();
-  let xMove = useTransform(motionScroll, [0, 1], [0, 100]);
-
-  useFrame(() => {
-    console.log(motionScroll);
-    console.log(xMove);
+  // Update timeline
+  useFrame((state, delta) => {
+    timeline.current.seek(scroll.offset * timeline.current.duration());
   });
 
-  // useEffect(() => {
-  //   tl.current =
-  // }, [])
+  useEffect(() => {
+    // Setup timeline
+    timeline.current = gsap.timeline({
+      defaults: { duration: 1 },
+    });
+
+    // Animation
+    timeline.current
+      .to(laptop.current.rotation, { y: -3 }, 2)
+      .to(laptop.current.position, { x: -8 }, 2)
+      .call(
+        () => setLaptopScreenPath("./images/marcoPointing.png"),
+
+        [],
+        null,
+        "<2"
+      )
+      .to(laptop.current.rotation, { y: -5 }, 4)
+
+      .to(laptop.current.rotation, { y: 1 }, 8)
+      .to(laptop.current.position, { x: -1 }, 8)
+      .call(
+        function () {
+          setLaptopScreenPath("./images/p1.jpg");
+        },
+        [],
+        null,
+        "<1"
+      )
+
+      .to(laptop.current.rotation, { y: 0 }, 11)
+      .to(laptop.current.rotation, { x: 1 }, 11)
+      .to(laptop.current.position, { x: 0 }, 11)
+
+      .to(laptop.current.rotation, { y: 0 }, 13)
+      .to(laptop.current.rotation, { x: -1 }, 13)
+      .to(laptop.current.position, { x: 0 }, 13)
+
+      .to(laptop.current.rotation, { y: 0 }, 16)
+      .to(laptop.current.rotation, { x: 0 }, 16)
+      .to(laptop.current.position, { x: 0 }, 16)
+
+      .to(laptop.current.rotation, { y: 0 }, 20)
+      .to(laptop.current.rotation, { x: 0 }, 20)
+      .to(laptop.current.position, { x: 0 }, 20);
+
+    // timeline.current.set(smartScreenPath, "./images/marcoPointing.png", 4);
+  }, []);
 
   return (
-    <motion.group
+    <group
       {...props}
       dispose={null}
       scale={1}
       position={pos ? pos : [0, 0, 0]}
       rotation={rot ? rot : [0, 0, 0]}
-      style={{ x: xMove.current }}
+      ref={laptop}
     >
       <group rotation={[-Math.PI / 2, 0, 0]}>
-        <mesh geometry={nodes.Object_2.geometry} material={materials.Buttons}>
-          {/* <meshBasicMaterial color="gray" /> */}
-        </mesh>
-        <mesh geometry={nodes.Object_3.geometry} material={materials.screen}>
+        <mesh
+          geometry={nodes.Object_2.geometry}
+          material={materials.Buttons}
+        ></mesh>
+        {/* <mesh
+          geometry={nodes.Object_3.geometry}
+          material={materials.screen}
+        >
           <meshStandardMaterial
-            // map={laptopScreen}
-            color={"black"}
             roughness={1}
             metalness={1}
           />
-        </mesh>
+        </mesh> */}
         <mesh
           rotation={[Math.PI / 2, 0, -0.41]}
           position={[2.2, 0, 1.2]}
@@ -71,44 +112,11 @@ export default function Laptop({ pos, rot, ...props }) {
             metalness={1}
           />
         </mesh>
-
-        {/* 9:16 aspect ratio screen  */}
-        {/* <mesh
-          rotation={[Math.PI / 2, 0, -0.41]}
-          position={[2.3, 0, 1.4]}
-          scale={0.23}
-        >
-          <boxGeometry args={[0.01, 9, 16]} />
-          <meshStandardMaterial
-            map={laptopScreen}
-            roughness={1}
-            metalness={1}
-          />
-        </mesh> */}
-
-        {/* <mesh
-          rotation={[Math.PI / 2, 0, -0.41]}
-          position={[1.8, 0, 0.25]}
-          scale={0.23}
-        >
-          <boxGeometry args={[0.01, 2, 16]} />
-          <meshStandardMaterial color="gray">
-            <RenderTexture attach="map">
-              <PerspectiveCamera makeDefault position={[0, 0, 5]} />
-              <Text fontSize={0.5} color="orange">
-                Marco Fijan
-              </Text>
-            </RenderTexture>
-          </meshStandardMaterial>
-        </mesh> */}
         <mesh
           geometry={nodes.Object_4.geometry}
           material={materials.Material}
         />
-        <mesh
-          geometry={nodes.Object_5.geometry}
-          // material={materials.Metal}
-        >
+        <mesh geometry={nodes.Object_5.geometry}>
           <meshStandardMaterial
             color="black
           "
@@ -130,12 +138,14 @@ export default function Laptop({ pos, rot, ...props }) {
         />
         <mesh
           geometry={nodes.Object_9.geometry}
+
           // material={materials.LabTop_Base}
         >
           <meshStandardMaterial color="#9c9c9c" roughness={0.5} metalness={1} />
         </mesh>
         <mesh
           geometry={nodes.Object_10.geometry}
+          rotation={[0, Math.PI / -1.6, 0]}
 
           // material={materials.LabTop_Base}
         >
@@ -148,7 +158,7 @@ export default function Laptop({ pos, rot, ...props }) {
           <meshBasicMaterial color="#585858" />
         </mesh>
       </group>
-    </motion.group>
+    </group>
   );
 }
 

@@ -16,12 +16,6 @@ import {
 import { useRef, useState } from "react";
 
 export default function PortfolioProjects({ isAtTop, ...props }) {
-  // const scroll = useScroll();
-  // let move = useTransform(scroll, [0, 1], [1, 0]);
-
-  // useFrame(() => {
-  //   console.log(scroll);
-  // });
   // let tl = useRef(null);
   // let { scrollYProgress } = useScroll({
   //   target: tl,
@@ -36,22 +30,22 @@ export default function PortfolioProjects({ isAtTop, ...props }) {
     <group>
       <ScrollControls pages={isAtTop ? 6 : 0} damping={0.1}>
         <Environment blur={0} preset="warehouse" />
-        <Float
+        {/* <Float
           speed={0.7}
           rotationIntensity={1}
           floatIntensity={0.2}
           floatingRange={[3, -3]}
-        >
-          <Laptop pos={[4, -1, 0]} rot={[0.2, 1.9, 0]} />
-        </Float>
+        > */}
+        <Laptop pos={[4, -1, 0]} rot={[0.2, 1.9, 0]} />
+        {/* </Float>
         <Float
           speed={1}
           rotationIntensity={1} // 1
           floatIntensity={0.2} // 0.2
           floatingRange={[5, -5]} // 5, 5
-        >
-          <Smartphone pos={[1, 0, 0]} rot={[0, 0.2, 0]} />
-        </Float>
+        > */}
+        <Smartphone pos={[1, 0, 0]} rot={[0, 0.2, 0]} />
+        {/* </Float> */}
 
         <Scroll>
           <Background />

@@ -7,18 +7,80 @@ Source: https://sketchfab.com/3d-models/smartphone-380280333c9f4fb8a21a53d18f678
 Title: Smartphone
 */
 
-import React, { useRef } from "react";
-import { useEnvironment, useGLTF, useTexture } from "@react-three/drei";
+import React, { useRef, useEffect, useState } from "react";
+import { gsap } from "gsap";
+import { useGLTF, useTexture, useScroll } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 
 export default function Smartphone({ pos, rot, ...props }) {
   const { nodes, materials } = useGLTF("./models/smartphone.glb");
-  const smartScreen = useTexture("./images/p1.jpg");
+  let [smartScreenPath, setSmartScreenPath] = useState("./images/p1.jpg");
+  const smartScreen = useTexture(smartScreenPath);
+
+  const laptop = useRef();
+  const scroll = useScroll();
+  const timeline = useRef();
+
+  // Update timeline
+  useFrame((state, delta) => {
+    timeline.current.seek(scroll.offset * timeline.current.duration());
+  });
+
+  useEffect(() => {
+    // Setup timeline
+    timeline.current = gsap.timeline({
+      defaults: { duration: 1 },
+    });
+
+    // Animation
+    timeline.current
+      .to(laptop.current.rotation, { y: -3 }, 2)
+      .to(laptop.current.position, { x: -8 }, 2)
+      .call(
+        () => setSmartScreenPath("./images/marcoPointing.png"),
+
+        [],
+        null,
+        "<2"
+      )
+      .to(laptop.current.rotation, { y: -5 }, 4)
+
+      .to(laptop.current.rotation, { y: 1 }, 8)
+      .to(laptop.current.position, { x: -1 }, 8)
+      .call(
+        function () {
+          setSmartScreenPath("./images/p1.jpg");
+        },
+        [],
+        null,
+        "<1"
+      )
+
+      .to(laptop.current.rotation, { y: 0 }, 11)
+      .to(laptop.current.rotation, { x: 1 }, 11)
+      .to(laptop.current.position, { x: 0 }, 11)
+
+      .to(laptop.current.rotation, { y: 0 }, 13)
+      .to(laptop.current.rotation, { x: -1 }, 13)
+      .to(laptop.current.position, { x: 0 }, 13)
+
+      .to(laptop.current.rotation, { y: 0 }, 16)
+      .to(laptop.current.rotation, { x: 0 }, 16)
+      .to(laptop.current.position, { x: 0 }, 16)
+
+      .to(laptop.current.rotation, { y: 0 }, 20)
+      .to(laptop.current.rotation, { x: 0 }, 20)
+      .to(laptop.current.position, { x: 0 }, 20);
+
+    // timeline.current.set(smartScreenPath, "./images/marcoPointing.png", 4);
+  }, []);
 
   return (
     <group
       {...props}
       dispose={null}
       scale={1.3}
+      ref={laptop}
       position={pos ? pos : [0, 0, 0]}
       rotation={rot ? rot : [0, 0, 0]}
     >
