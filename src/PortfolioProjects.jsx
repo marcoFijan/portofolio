@@ -1,6 +1,7 @@
 "use client";
 
 import Laptop from "./Laptop.jsx";
+import Laptop2 from "./Laptopv2.jsx";
 import Smartphone from "./Smartphone.jsx";
 import Background from "./Background.jsx";
 import { motion, useTransform } from "framer-motion";
@@ -46,6 +47,8 @@ export default function PortfolioProjects({ isAtTop, ...props }) {
         > */}
         <Smartphone pos={[1, 0, 0]} rot={[0, 0.2, 0]} />
         {/* </Float> */}
+
+        {/* <Laptop2/> */}
 
         <Scroll>
           <Background />
